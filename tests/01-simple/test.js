@@ -6,16 +6,17 @@ let ErrorCount = new Counter("errors");
 
 export const options = {
   vus: 10,
-  duration: "15s",
+  duration: "60s",
   thresholds: {
     errors: ["count<10"]
   }
 };
 
-export default function() {
-  const path = Math.random() < 0.9 ? "200" : "500";
+export default function () {
 
-  let res = http.get(`https://httpbin.test.loadimpact.com/status/${path}`);
+  const path = Math.random() < 0.8 ? "200" : "500";
+
+  let res = http.get(`https://httpbin.test.k6.io/status/${path}`);
   let success = check(res, {
     "status is 200": r => r.status === 200
   });
@@ -23,5 +24,5 @@ export default function() {
     ErrorCount.add(1);
   }
 
-  sleep(2);
+  sleep(1);
 }
